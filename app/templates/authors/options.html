@@ -1,0 +1,12 @@
+{% extends "authors/authorBase.html" %}
+
+{% block head %}
+<title>Author options</title>
+{% endblock head %}
+
+{% block body %}
+<main id="authorOptions">
+    <div class="div"><a href="{{ url_for('authors.login') }}">Author login</a></div>
+    <div class="div"><a href="{{ url_for('authors.signup') }}">Author signup</a></div>
+</main>
+{% endblock body %}

@@ -1,0 +1,22 @@
+{% extends "authors/authorBase.html" %}
+
+{% block head %}
+<title>Home</title>
+{% endblock head %}
+
+{% block body %}
+<main id="home">
+    <section class="heroPage min-height-100">
+        <h1 class="primary-header">We Share.</h1>
+        {% if current_user.is_authenticated %}
+        <h3> Welcome {{ name.username }}!</h3>
+        {% endif %}
+        
+    </section>
+    <section class="posts" id="posts">
+        <div class="recentPosts"></div>
+        <div class="popularPosts"></div>
+        <div class="otherNews"></div>
+    </section>
+</main>
+{% endblock body %}

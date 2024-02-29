@@ -1,0 +1,26 @@
+{% extends "authors/authorBase.html" %}
+
+
+{% block head %}
+<title>Author Signup</title>
+{% endblock head %}
+
+{% block body %}
+<main id="author-signup">
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+    {{ message[0] }}
+    {% endif %}
+    {% endwith %}
+    <div class="formContainerMain d-flex align-items-center justify-content-center flex-column">
+        <div class="form-container ">
+            <form action="/author-signup" class="form-control" method="POST">
+                <input type="email" placeholder="Email" name="email" class="form-control">
+                <input type="text" placeholder="Username" name="username" class="form-control ">
+                <input type="password" placeholder="password" name="password" minlength="8" class="form-control">
+                <input type="submit" value="signup as an author" class="form-control">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock body %}

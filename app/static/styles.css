@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    --white: #FFFFFF;
+    --dark: #474554;
+    --gray: #474554;
+}
+
+.min-height-100 {
+    min-height: 100vh;
+    min-height: 100lvh;
+}
+
+
+
+#home > .heroPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("media/desk.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    flex-direction: column;
+}
+
+.primary-header {
+    font-size: 5rem;
+}
+
+#login,
+#signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    min-height: 80lvh;
+    flex-wrap: wrap;
+}
+
+#signup form {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0.5rem;
+}
+
+#signup input[type="submit"] {
+    grid-column: span 2;
+}
+
+#login form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#login .formContainer,
+#signup .formContainer {
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.formContainerMain {
+    min-height: 80vh;
+    min-height: 80lvh;
+}

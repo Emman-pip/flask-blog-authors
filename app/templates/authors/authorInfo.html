@@ -1,0 +1,15 @@
+{% extends "authors/authorBase.html" %}
+
+{% block head %}
+<title>Author info</title>
+{% endblock head %}
+
+{% block body %}
+<main id="authorInfo">
+    <form action="/author-info" method="POST" class="form-control">
+        <label for="description" class="form-control ">Enter a description about yourself as a writer:</label>
+        <textarea id="description" name="description" class="form-control " id="" cols="30" rows="10">{{ desc.description }}</textarea>
+        <input type="submit" name="submit" value="Submit" class="form-control btn btn-info ">
+    </form>
+</main>
+{% endblock body %}

@@ -6,8 +6,11 @@
 
 {% block body %}
 <main id="yourPosts">
+    {% if posts | length < 1 %}
+        <h1 class="display-1 text-center ">No posts yet.</h1>
+    {% endif %}
     {% for post in posts %}
-        <section class="article">
+    <section class="article">
             <div class="title">
                 <h1 class="display-6">
                     {{ post.article_title }}
@@ -20,6 +23,6 @@
                 <a href="/update/{{ post.article_id }}" class="btn btn-info " onclick="return confirm('You cannot undo the changes you made once you update an article.')">Update Post</a>
             </div>
         </section>
-    {% endfor %}
+        {% endfor %}
 </main>
 {% endblock body %}

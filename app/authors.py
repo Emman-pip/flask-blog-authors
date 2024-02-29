@@ -76,9 +76,13 @@ def signup_post():
 @authors.route('/your-posts')
 @login_required
 def yourPosts():
+    user = Authors.query.filter_by(account_id=current_user.account_id).first()
+    print(user)
+    if not user:
+        db.session.add(Authors(account_id=current_user.account_id, description='None'))
+        db.session.commit()
     posts = Articles.query.filter_by(author_id=Authors.query.filter_by(account_id=current_user.account_id).first().author_id).all()
     return render_template('authors/yourPosts.html', posts=posts)
-    # TODO: ADD UPDATE AND DELETE OPTIONS HERE
 
 
 @authors.route('/new-post')

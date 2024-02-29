@@ -5,5 +5,19 @@
 {% endblock head %}
 
 {% block body %}
-{{ name }}
+<main id="newPost">
+    <div class="formContainer">
+        <form action="/new-post" class="form-control " method="POST">
+            <div class="form-floating">
+                <input name="title" type="text" class="form-control" id="title" minlength="10" >
+                <label for="title">Title</label>
+            </div>
+            <div class="form-floating">
+                <textarea style="min-height:60vh" name="content" id="" cols="30" rows="20" class="form-control" minlength="100"></textarea>
+                <label for="content">Article Content</label>
+            </div>
+            <input type="submit" value="Post" class="form-control btn btn-info">
+        </form>
+</div>
+</main>
 {% endblock body %}

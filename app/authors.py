@@ -87,6 +87,27 @@ def newPosts():
     return render_template('authors/newPost.html', name=name)
 
 
+@authors.route('/new-post', methods=["POST"])
+def newPosts_post():
+    title = request.form.get('title')
+    content = request.form.get('content')
+    
+    user = Authors.query.filter_by(account_id = current_user.account_id).first()
+    
+    if user:
+        author_id = user.author_id
+    else:
+        newAuthor = Authors(description='None', account_id=current_user.account_id)
+        db.session.add(newAuthor)
+        db.session.commit()
+    article = Articles(article_title=title, article_content=content, author_id=Authors.query.filter_by(account_id=current_user.account_id).first().author_id)
+    
+    db.session.add(article)
+    db.session.commit()
+    
+    return redirect(url_for('authors.yourPosts'))
+
+
 @authors.route('/author-info')
 @login_required
 def authorInfo():

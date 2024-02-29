@@ -76,8 +76,8 @@ def signup_post():
 @authors.route('/your-posts')
 @login_required
 def yourPosts():
-    name = current_user.username
-    return render_template('authors/yourPosts.html', name=name)
+    posts = Articles.query.filter_by(author_id=Authors.query.filter_by(account_id=current_user.account_id).first().author_id).all()
+    return render_template('authors/yourPosts.html', posts=posts)
 
 
 @authors.route('/new-post')

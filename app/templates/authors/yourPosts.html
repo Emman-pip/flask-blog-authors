@@ -5,5 +5,10 @@
 {% endblock head %}
 
 {% block body %}
-hi, {{ name }}
+{% for post in posts %}
+    <section class="article">
+        <div class="title">{{ post.article_title }}</div>
+        <div class="content">{{ post.article_content }}</div>
+    </section>
+{% endfor %}
 {% endblock body %}

@@ -5,14 +5,21 @@
 {% endblock head %}
 
 {% block body %}
-{% for post in posts %}
-    <section class="article">
-        <div class="title">{{ post.article_title }}</div>
-        <div class="content">{{ post.article_content }}</div>
-        <div class="buttons">
-            <a href="/delete/{{ post.article_id }}" onclick="return confirm('You will permanently delete this article. You cannot undo this action once you continue.')">Delete Post</a>
-            <a href="/update/{{ post.article_id }}" onclick="return confirm('You cannot undo the changes you made once you update an article.')">Update Post</a>
-        </div>
-    </section>
-{% endfor %}
+<main id="yourPosts">
+    {% for post in posts %}
+        <section class="article">
+            <div class="title">
+                <h1 class="display-6">
+                    {{ post.article_title }}
+
+                </h1>
+            </div>
+            <div class="content">{{ post.article_content }}</div>
+            <div class="buttons">
+                <a href="/delete/{{ post.article_id }}" class="btn btn-danger" onclick="return confirm('You will permanently delete this article. You cannot undo this action once you continue.')">Delete Post</a>
+                <a href="/update/{{ post.article_id }}" class="btn btn-info " onclick="return confirm('You cannot undo the changes you made once you update an article.')">Update Post</a>
+            </div>
+        </section>
+    {% endfor %}
+</main>
 {% endblock body %}

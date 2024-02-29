@@ -78,6 +78,7 @@ def signup_post():
 def yourPosts():
     posts = Articles.query.filter_by(author_id=Authors.query.filter_by(account_id=current_user.account_id).first().author_id).all()
     return render_template('authors/yourPosts.html', posts=posts)
+    # TODO: ADD UPDATE AND DELETE OPTIONS HERE
 
 
 @authors.route('/new-post')
@@ -130,8 +131,39 @@ def authorInfo_post():
     db.session.commit()
     return redirect(url_for('authors.authorInfo'))
             
+@authors.route('/delete/<article_id>')
+@login_required
+def delete(article_id):
+    article = Articles.query.filter_by(article_id=article_id).first()
+    if not article:
+        return 'Failed to delete.'
+    db.session.delete(article)
+    db.session.commit()
+    return redirect(url_for('authors.yourPosts'))
+
+@authors.route('/update/<article_id>')
+@login_required
+def update(article_id):
+    article = Articles.query.filter_by(article_id=article_id).first()
+    return render_template('authors/updateArticle.html', article=article)
 
 
+@authors.route('/update/<article_id>', methods=["POST"])
+def update_post(article_id):
+    title = request.form.get('title')
+    content = request.form.get('content')
+    article = Articles.query.filter_by(article_id=article_id).first()
+    
+    if not article:
+        return 'Filed to update the article. try again later.'
+    
+    article.article_title = title
+    article.article_content = content
+    db.session.commit()
+    
+    return redirect(url_for('authors.yourPosts'))
+
+    
 @authors.route('/logout-author')
 @login_required
 def logout():

@@ -1,0 +1,28 @@
+
+{% extends "authors/authorBase.html" %}
+
+{% block head %}
+<title>Update Article</title>
+{% endblock head %}
+
+{% block body %}
+<main id="newPost">
+    <div class="formContainer">
+        <form action="/update/{{ article.article_id }}" class="form-control " method="POST">
+            <div class="form-floating">
+                <input name="title" type="text" class="form-control" id="title" value="{{ article.article_title}}" minlength="10" >
+                <label for="title">Title</label>
+            </div>
+            <div class="form-floating">
+                <textarea style="min-height:60vh" name="content" id="" cols="30" rows="20" class="form-control" minlength="100">
+                    {{ article.article_content }}
+                </textarea>
+                <label for="content">Article Content</label>
+            </div>
+            <input type="submit" value="Post" class="form-control btn btn-info">
+            <a class="btn btn-danger container-fluid" href="{{ url_for('authors.yourPosts') }}">Cancel</a>
+        </form>
+        
+</div>
+</main>
+{% endblock body %}

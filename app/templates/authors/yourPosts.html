@@ -9,6 +9,10 @@
     <section class="article">
         <div class="title">{{ post.article_title }}</div>
         <div class="content">{{ post.article_content }}</div>
+        <div class="buttons">
+            <a href="/delete/{{ post.article_id }}" onclick="return confirm('You will permanently delete this article. You cannot undo this action once you continue.')">Delete Post</a>
+            <a href="/update/{{ post.article_id }}" onclick="return confirm('You cannot undo the changes you made once you update an article.')">Update Post</a>
+        </div>
     </section>
 {% endfor %}
 {% endblock body %}

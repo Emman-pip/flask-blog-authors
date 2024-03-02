@@ -7,7 +7,13 @@
 {% block body %}
 <main id="newPost">
     <div class="formContainer">
-        <form action="/new-post" class="form-control " method="POST">
+        {% with message = get_flashed_messages() %}
+        {% if message %}
+            <p>{{ message[0]}}</p>
+        {% endif %}
+        {% endwith %}
+        <form action="/new-post" class="form-control"  method="POST" enctype="multipart/form-data">
+            {{ form.photo }}
             <div class="form-floating">
                 <input name="title" type="text" class="form-control" id="title" minlength="10" >
                 <label for="title">Title</label>

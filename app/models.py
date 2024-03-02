@@ -43,6 +43,7 @@ class Articles(db.Model):
     article_content = Column(Text, nullable=False)
     author_id = Column(Integer, ForeignKey(Authors.author_id))
     total_views = Column(Integer, default=0)
+    article_photo = Column(Text, default='https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg')
 
 
 class ReaderAccounts(UserMixin, db.Model):

@@ -13,6 +13,7 @@
                 <input name="title" type="text" class="form-control" id="title" value="{{ article.article_title}}" minlength="10" >
                 <label for="title">Title</label>
             </div>
+            <img src="../../{{ article.article_photo }}" alt="article_icon" class="img-fluid "/>
             <div class="form-floating">
                 <textarea style="min-height:60vh" name="content" id="" cols="30" rows="20" class="form-control" minlength="100">
                     {{ article.article_content }}

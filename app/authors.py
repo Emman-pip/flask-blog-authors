@@ -3,6 +3,14 @@ from .models import db, AuthorAccounts, Authors, Articles
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, login_user, logout_user, current_user
 
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
+from werkzeug.utils import secure_filename
+import os
+
+# class for file uploading
+class ArticlePhoto(FlaskForm):
+    photo = FileField(validators=[FileRequired()])
 
 authors = Blueprint("authors", __name__)
 
@@ -89,11 +97,19 @@ def yourPosts():
 @login_required
 def newPosts():
     name = current_user.username
-    return render_template('authors/newPost.html', name=name)
+    form = ArticlePhoto()
+    return render_template('authors/newPost.html', name=name, form=form)
 
 
 @authors.route('/new-post', methods=["POST"])
 def newPosts_post():
+    photo = ArticlePhoto()
+    
+    # if not photo.validate_on_submit():
+    #     flash('Please upload a file')
+    #     return redirect(url_for('authors.newPosts'))
+    
+    photo_data = photo.photo.data
     title = request.form.get('title')
     content = request.form.get('content')
     
@@ -105,7 +121,9 @@ def newPosts_post():
         newAuthor = Authors(description='None', account_id=current_user.account_id)
         db.session.add(newAuthor)
         db.session.commit()
-    article = Articles(article_title=title, article_content=content, author_id=Authors.query.filter_by(account_id=current_user.account_id).first().author_id)
+    photo_data.save(os.path.join('app/static/uploads', secure_filename(photo_data.filename)))
+    
+    article = Articles(article_title=title, article_content=content, author_id=Authors.query.filter_by(account_id=current_user.account_id).first().author_id, article_photo=os.path.join('./static/uploads', secure_filename(photo_data.filename)))
     
     db.session.add(article)
     db.session.commit()

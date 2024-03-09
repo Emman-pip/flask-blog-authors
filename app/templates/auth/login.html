@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Login</title>
+{% endblock head %}
+
+{% block body %}
+<main id="login"> 
+    <h1 class="display-1 ">Log in..</h1>
+    <div class="formContainer">
+        {% with message = get_flashed_messages() %}
+        {% if message %}
+        <div class="bg-danger">
+            {{ message[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+    
+        <form action="/login" method="POST" class="form-control p-3 ">
+            <input type="email" name="email" placeholder="email" class="form-control ">
+            <input type="password" name="password" placeholder="password" class="form-control ">
+            <input type="submit" value="login" class="btn bg-dark-subtle ">
+        </form>
+    </div>
+</main>
+{% endblock body %}

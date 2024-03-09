@@ -4,7 +4,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import select, Integer, func, Column, Integer, String, ForeignKey, text, Text
 from flask_login import LoginManager
 
-from app import models
+from app import models, pages, auth
 from  .authors import authors
 
 # class Base(DeclarativeBase):
@@ -24,9 +24,11 @@ def create_app():
 
     @login_manager_author.user_loader
     def load_user(user_id):
-        return models.AuthorAccounts.query.get(user_id)
+        return models.Account.query.get(user_id)
     
     app.register_blueprint(authors)
+    app.register_blueprint(pages.bp)
+    app.register_blueprint(auth.auth)
     
     models.db.init_app(app)
     return app

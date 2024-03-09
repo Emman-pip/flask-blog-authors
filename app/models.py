@@ -22,11 +22,12 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 
 
-class AuthorAccounts(UserMixin, db.Model):
+class Account(UserMixin, db.Model):
     account_id = Column(Integer, primary_key=True)
     username = Column(String(100), unique=True, nullable=False)
     password = Column(String(100), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
+    role = Column(String(100), nullable=False)
     def get_id(self):
         return self.account_id
 
@@ -34,7 +35,7 @@ class AuthorAccounts(UserMixin, db.Model):
 class Authors(db.Model):
     author_id = Column(Integer, primary_key=True)
     description = Column(Text, nullable=False)
-    account_id = Column(Integer, ForeignKey(AuthorAccounts.account_id))
+    account_id = Column(Integer, ForeignKey(Account.account_id))
 
 
 class Articles(db.Model):
@@ -46,8 +47,8 @@ class Articles(db.Model):
     article_photo = Column(Text, default='https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg')
 
 
-class ReaderAccounts(UserMixin, db.Model):
-    id = Column(Integer, primary_key=True)
-    email = Column(String(100), unique=True)
-    username = Column(String(150))
-    password = Column(String(100))
+# class ReaderAccounts(UserMixin, db.Model):
+#     id = Column(Integer, primary_key=True)
+#     email = Column(String(100), unique=True)
+#     username = Column(String(150))
+#     password = Column(String(100))

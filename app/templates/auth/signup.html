@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block head %}
+<title>Signup</title>
+{% endblock head %}
+
+{% block body %}
+<main id="signup">
+    <h1 class="display-1 ">Signup :)</h1>
+    <div class="formContainer">
+        <div>
+            {% with message = get_flashed_messages() %}
+            {% if message %}
+                {{ message[0]}}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <form action="/signup" method="POST" class="form-control p-3 ">
+            <input type="email" name="email" id="email" placeholder="Email" class="form-control">
+            <input type="text" name="username" id="username" placeholder="Username" class="form-control">
+            <input type="password" name="password" id="password" minlength="8" placeholder="Password" class="form-control">
+            <input type="submit" value="Create an account" class="form-control bg-dark-subtle ">
+        </form>
+    </div>
+</main>
+{% endblock body %}

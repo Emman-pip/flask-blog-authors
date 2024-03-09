@@ -1,7 +1,9 @@
 {% extends "authors/authorBase.html" %}
 
 {% block head %}
-<title>Welcome, {{ name }}</title>
+{% if current_user.is_authenticated %}
+    <title>Welcome, {{ name }}</title>
+{% endif %}
 {% endblock head %}
 
 {% block body %}

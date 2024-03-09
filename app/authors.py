@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash, current_app
-from .models import db, AuthorAccounts, Authors, Articles
+from .models import db, Account, Authors, Articles
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, login_user, logout_user, current_user
 
@@ -15,7 +15,7 @@ class ArticlePhoto(FlaskForm):
 authors = Blueprint("authors", __name__)
 
 
-@authors.route("/")
+@authors.route("/author-home")
 def home():
     return render_template('home.html',  name=current_user)
 
@@ -37,19 +37,22 @@ def login_post():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    author = AuthorAccounts().query.filter_by(email=email).first()
+    user = Account().query.filter_by(email=email).first()
     
-    if not author:
+    if not user:
         flash('Invalid email')
         return redirect(url_for('authors.login'))
     
-    if not check_password_hash(author.password, password):
+    if not check_password_hash(user.password, password):
         flash('Invalid password')
         return redirect(url_for('authors.login'))
 
-    
-    login_user(author)
-    return redirect(url_for('authors.yourPosts'))
+    if user.role == 'author':
+        login_user(user)
+        return redirect(url_for('authors.yourPosts'))
+    elif user.role == 'reader':
+        login_user(user)
+        return redirect(url_for('pages.home'))
 
 
 @authors.route("/author-signup")
@@ -63,17 +66,18 @@ def signup_post():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    authorEmail = AuthorAccounts.query.filter_by(email=email).first()
-    authorUsername = AuthorAccounts.query.filter_by(username=username).first()
+    authorEmail = Account.query.filter_by(email=email).first()
+    authorUsername = Account.query.filter_by(username=username).first()
 
     if authorUsername or authorEmail:
         flash("Invalid email or username")
         return redirect(url_for("authors.signup"))
 
-    authorAccount = AuthorAccounts(
+    authorAccount = Account(
         username=username,
         email=email,
         password=generate_password_hash(password, method="pbkdf2:sha1"),
+        role='author'
     )
 
     db.session.add(authorAccount)
@@ -84,8 +88,9 @@ def signup_post():
 @authors.route('/your-posts')
 @login_required
 def yourPosts():
+    if current_user.role != 'author':
+        return redirect('pages.home')
     user = Authors.query.filter_by(account_id=current_user.account_id).first()
-    print(user)
     if not user:
         db.session.add(Authors(account_id=current_user.account_id, description='None'))
         db.session.commit()
@@ -96,6 +101,8 @@ def yourPosts():
 @authors.route('/new-post')
 @login_required
 def newPosts():
+    if current_user.role != 'author':
+        return redirect('pages.home')
     name = current_user.username
     form = ArticlePhoto()
     return render_template('authors/newPost.html', name=name, form=form)
@@ -134,6 +141,8 @@ def newPosts_post():
 @authors.route('/author-info')
 @login_required
 def authorInfo():
+    if current_user.role != 'author':
+        return redirect('pages.home')
     desc = Authors.query.filter_by(account_id=current_user.account_id).first()
     return render_template('authors/authorInfo.html', desc=desc)
 
@@ -156,6 +165,8 @@ def authorInfo_post():
 @authors.route('/delete/<article_id>')
 @login_required
 def delete(article_id):
+    if current_user.role != 'author':
+        return redirect('pages.home')
     article = Articles.query.filter_by(article_id=article_id).first()
     if not article:
         return 'Failed to delete.'
@@ -166,12 +177,16 @@ def delete(article_id):
 @authors.route('/update/<article_id>')
 @login_required
 def update(article_id):
+    if current_user.role != 'author':
+        return redirect('pages.home')
     article = Articles.query.filter_by(article_id=article_id).first()
     return render_template('authors/updateArticle.html', article=article)
 
 
 @authors.route('/update/<article_id>', methods=["POST"])
 def update_post(article_id):
+    if current_user.role != 'author':
+        return redirect('pages.home')
     title = request.form.get('title')
     content = request.form.get('content')
     article = Articles.query.filter_by(article_id=article_id).first()

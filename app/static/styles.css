@@ -39,8 +39,8 @@
 }
 
 #signup form {
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
 }
 

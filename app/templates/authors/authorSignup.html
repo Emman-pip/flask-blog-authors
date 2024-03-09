@@ -7,12 +7,12 @@
 
 {% block body %}
 <main id="author-signup">
-    {% with message = get_flashed_messages() %}
-    {% if message %}
-    {{ message[0] }}
-    {% endif %}
-    {% endwith %}
     <div class="formContainerMain d-flex align-items-center justify-content-center flex-column">
+        {% with message = get_flashed_messages() %}
+        {% if message %}
+        {{ message[0] }}
+        {% endif %}
+        {% endwith %}
         <div class="form-container ">
             <form action="/author-signup" class="form-control gap-3 d-flex flex-column p-3 " method="POST">
                 <h1 class="display-6 text-center">Signup</h1>

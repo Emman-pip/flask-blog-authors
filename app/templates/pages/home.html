@@ -7,7 +7,7 @@
 {% block body %}
 <main id="home" class="bg-light ">
     <section class="heroPage min-height-100">
-        <h1 class="primary-header">We Share.</h1>
+        <h1 class="primary-header text-center ">We Share.</h1>
         {% if current_user.is_authenticated %}
         <h3> Welcome {{ name.username }}!</h3>
         {% endif %}
@@ -17,7 +17,7 @@
         <div class="allPosts">
             <h3>Posts</h3>
             {% for post in data %}
-                <div class="article bg-dark-subtle ">
+                <div class="article rounded-4 border border-black  border-1 p-3">
                     <a href="/article/{{ post.article_id }}" class="title display-6 link-dark">{{ post.article_title }}</a>
                     <div class="content" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ post.article_content }}</div>
                     <div class="author">author: {{ post.username }}</div>

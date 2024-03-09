@@ -8,6 +8,7 @@ from sqlalchemy import (
     ForeignKey,
     text,
     Text,
+    DateTime
 )
 
 # from app import db
@@ -50,6 +51,7 @@ class Articles(db.Model):
         Text,
         default="https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg",
     )
+    date = Column(DateTime)
 
 
 # class ReaderAccounts(UserMixin, db.Model):

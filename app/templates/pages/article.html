@@ -8,9 +8,11 @@
 <main id="articlePage">
     <div class="mainArticle bg-dark-subtle p-3 ">
         <h1 class="title">{{ data.article_title }}</h1>
-        <img src="../../{{ data.article_photo }}" alt="icon" class="img-fluid">
-        
-        <p>{{ data.article_content }}</p>
+        <div class="containerArticle d-flex justify-content-center  align-items-center ">
+            <img src="../../{{ data.article_photo }}" alt="icon" class=" img-fluid  ">
+            
+            <p>{{ data.article_content }}</p>
+        </div>
         <div class="nav float-end ">
             <a href="{{ url_for('pages.home') }}#posts" class="btn btn-info">Back</a>
         </div>

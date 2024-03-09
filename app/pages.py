@@ -13,7 +13,17 @@ bp = Blueprint("pages", __name__)
 def home():
     data = db.session.execute(
         text(
-            "SELECT a.article_id, a.article_title, a.article_content, acc.username FROM articles AS a INNER JOIN authors ON authors.author_id=a.author_id INNER JOIN account AS acc ON acc.account_id=authors.account_id;"
+            """
+            SELECT 
+            a.article_id, 
+            a.article_title, 
+            a.article_content, 
+            acc.username 
+            FROM articles AS a 
+            INNER JOIN authors ON authors.author_id=a.author_id 
+            INNER JOIN account AS acc ON acc.account_id=authors.account_id
+            ORDER BY a.date DESC;
+            """
         )
     )
     return render_template("pages/home.html", name=current_user, data=data)

@@ -80,3 +80,7 @@
 #yourPosts {
     padding-inline: 0.3rem;
 }
+
+.containerArticle {
+    flex-wrap: wrap;
+}

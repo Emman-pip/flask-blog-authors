@@ -16,6 +16,8 @@ from flask_wtf.file import FileField, FileRequired
 from werkzeug.utils import secure_filename
 import os
 
+from datetime import datetime
+
 
 # class for file uploading
 class ArticlePhoto(FlaskForm):
@@ -160,6 +162,7 @@ def newPosts_post():
         article_photo=os.path.join(
             "./static/uploads", secure_filename(photo_data.filename)
         ),
+        date=datetime.now()
     )
 
     db.session.add(article)

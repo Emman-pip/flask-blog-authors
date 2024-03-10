@@ -18,9 +18,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("media/desk.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+    /* background-image: url("media/desk.jpg"); */
+    /* background-size: cover; */
+    /* background-repeat: no-repeat; */
     flex-direction: column;
 }
 
@@ -72,7 +72,7 @@
 
 #yourPosts .article {
     padding: 1rem;
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     border-radius: 0.6rem;
     margin-bottom: 0.3rem;
 }

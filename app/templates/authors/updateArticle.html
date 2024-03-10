@@ -7,7 +7,7 @@
 
 {% block body %}
 <main id="newPost">
-    <div class="formContainer">
+    <div class="formContainer container-md ">
         <form action="/update/{{ article.article_id }}" class="form-control " method="POST">
             <div class="form-floating">
                 <input name="title" type="text" class="form-control" id="title" value="{{ article.article_title}}" minlength="10" >

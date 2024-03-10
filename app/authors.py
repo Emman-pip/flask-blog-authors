@@ -206,6 +206,8 @@ def delete(article_id):
     article = Articles.query.filter_by(article_id=article_id).first()
     if not article:
         return "Failed to delete."
+    # TODO: remove photo when a post is deleted
+    # os.remove(article.article_photo)
     db.session.delete(article)
     db.session.commit()
     return redirect(url_for("authors.yourPosts"))
@@ -243,3 +245,12 @@ def update_post(article_id):
 def logout():
     logout_user()
     return redirect(url_for("authors.login"))
+
+def numberOfClicks(article_id):
+    article = Articles.query.filter_by(article_id=article_id).first()
+    if not article:
+        flash("there is a problem with the server")
+        return
+    article.total_views += 1
+    db.session.commit()
+    

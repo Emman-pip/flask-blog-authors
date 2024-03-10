@@ -5,7 +5,7 @@
 {% endblock head %}
 
 {% block body %}
-<main id="home" class="bg-light ">
+<main id="home" class="">
     <section class="heroPage min-height-100">
         <h1 class="primary-header text-center ">We Share.</h1>
         {% if current_user.is_authenticated %}
@@ -18,9 +18,12 @@
             <h3>Posts</h3>
             {% for post in data %}
                 <div class="article rounded-4 border border-black  border-1 p-3">
-                    <a href="/article/{{ post.article_id }}" class="title display-6 link-dark">{{ post.article_title }}</a>
+                    <a href="/article/{{ post.article_id }}" class="title display-6 ">{{ post.article_title }}</a>
                     <div class="content" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ post.article_content }}</div>
-                    <div class="author">author: {{ post.username }}</div>
+                    <div class="">
+                        <div class="author">author: {{ post.username }}</div>
+                        <div>views: {{ post.total_views }}</div>
+                    </div>
                 </div>
             {% endfor %}
         </div>

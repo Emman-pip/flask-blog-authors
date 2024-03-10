@@ -4,6 +4,7 @@ from sqlalchemy import select, func, text
 from app.models import db, Articles, Authors, Account
 from flask_login import current_user
 from markupsafe import escape
+from .authors import numberOfClicks
 
 bp = Blueprint("pages", __name__)
 
@@ -18,6 +19,7 @@ def home():
             a.article_id, 
             a.article_title, 
             a.article_content, 
+            a.total_views,
             acc.username 
             FROM articles AS a 
             INNER JOIN authors ON authors.author_id=a.author_id 
@@ -38,6 +40,8 @@ def article(article_id):
             f"SELECT authA.username, auth.description FROM articles INNER JOIN authors as auth ON articles.author_id=auth.author_id INNER JOIN account as authA ON auth.account_id=authA.account_id WHERE articles.article_id={escape(article_id)};"
         )
     )
+    
+    numberOfClicks(article_id)
     return render_template(
         "pages/article.html", data=data, author=authorData.fetchone()
     )

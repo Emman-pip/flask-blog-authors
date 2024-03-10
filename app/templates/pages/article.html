@@ -6,9 +6,9 @@
 
 {% block body %}
 <main id="articlePage">
-    <div class="mainArticle bg-dark-subtle p-3 ">
+    <div class="mainArticle p-3 ">
         <h1 class="title">{{ data.article_title }}</h1>
-        <div class="containerArticle d-flex justify-content-center  align-items-center ">
+        <div class="containerArticle d-flex justify-content-center  align-items-center">
             <img src="../../{{ data.article_photo }}" alt="icon" class=" img-fluid  ">
             
             <p>{{ data.article_content }}</p>
@@ -17,7 +17,7 @@
             <a href="{{ url_for('pages.home') }}#posts" class="btn btn-info">Back</a>
         </div>
     </div>
-    <div class="aboutAuthor bg-dark-subtle p-4">
+    <div class="aboutAuthor p-4">
         <h4>about the author</h4>
         <h6 class="author">{{ author.username }}</h6>
         <p>{{ author.description }}</p>

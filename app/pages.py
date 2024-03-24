@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select, func, text
-from app.models import db, Articles, Authors, Account
+from sqlalchemy import text
+from app.models import db, Articles
 from flask_login import current_user
 from markupsafe import escape
 from .authors import numberOfClicks

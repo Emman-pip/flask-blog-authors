@@ -1,28 +1,19 @@
-from flask import (
-    Blueprint,
-    request,
-    render_template,
-    redirect,
-    url_for,
-    flash,
-    current_app,
-)
-from .models import db, Account, Authors, Articles
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_required, login_user, logout_user, current_user
+import os
+from datetime import datetime
 
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
+from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-import os
 
-from datetime import datetime
+from .models import Account, Articles, Authors, db
 
 
 # class for file uploading
 class ArticlePhoto(FlaskForm):
     photo = FileField(validators=[FileRequired()])
-
 
 authors = Blueprint("authors", __name__)
 
@@ -90,11 +81,11 @@ def signup_post():
         return redirect(url_for("authors.signup"))
 
     authorAccount = Account(
-        username=username,
-        email=email,
-        password=generate_password_hash(password, method="pbkdf2:sha1"),
-        role="author",
-    )
+            username=username,
+            email=email,
+            password=generate_password_hash(password, method="pbkdf2:sha1"),
+            role="author",
+            )
 
     db.session.add(authorAccount)
     db.session.commit()
@@ -112,10 +103,10 @@ def yourPosts():
         db.session.add(Authors(account_id=current_user.account_id, description="None"))
         db.session.commit()
     posts = Articles.query.filter_by(
-        author_id=Authors.query.filter_by(account_id=current_user.account_id)
-        .first()
-        .author_id
-    ).all()
+            author_id=Authors.query.filter_by(account_id=current_user.account_id)
+            .first()
+            .author_id
+            ).all()
     return render_template("authors/yourPosts.html", posts=posts)
 
 
@@ -150,20 +141,20 @@ def newPosts_post():
         db.session.add(newAuthor)
         db.session.commit()
     photo_data.save(
-        os.path.join("app/static/uploads", secure_filename(photo_data.filename))
-    )
+            os.path.join("app/static/uploads", secure_filename(photo_data.filename))
+            )
 
     article = Articles(
-        article_title=title,
-        article_content=content,
-        author_id=Authors.query.filter_by(account_id=current_user.account_id)
-        .first()
-        .author_id,
-        article_photo=os.path.join(
-            "./static/uploads", secure_filename(photo_data.filename)
-        ),
-        date=datetime.now()
-    )
+            article_title=title,
+            article_content=content,
+            author_id=Authors.query.filter_by(account_id=current_user.account_id)
+            .first()
+            .author_id,
+            article_photo=os.path.join(
+                "./static/uploads", secure_filename(photo_data.filename)
+                ),
+            date=datetime.now()
+            )
 
     db.session.add(article)
     db.session.commit()
@@ -253,4 +244,8 @@ def numberOfClicks(article_id):
         return
     article.total_views += 1
     db.session.commit()
-    
+
+
+
+
+

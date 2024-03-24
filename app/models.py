@@ -1,12 +1,9 @@
 from sqlalchemy import (
-    select,
     Integer,
-    func,
     Column,
     Integer,
     String,
     ForeignKey,
-    text,
     Text,
     DateTime
 )

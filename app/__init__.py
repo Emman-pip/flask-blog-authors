@@ -1,26 +1,9 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import (
-    select,
-    Integer,
-    func,
-    Column,
-    Integer,
-    String,
-    ForeignKey,
-    text,
-    Text,
-)
 from flask_login import LoginManager
 
-from app import models, pages, auth
+from app import auth, models, pages
+
 from .authors import authors
-
-# class Base(DeclarativeBase):
-#     pass
-
-# db = SQLAlchemy(model_class=Base)
 
 
 def create_app():
@@ -43,3 +26,5 @@ def create_app():
 
     models.db.init_app(app)
     return app
+
+
